@@ -7,7 +7,7 @@ ENV host:logger:consoleLoggingMode=always
 # Add files from this repo to the root site folder.
 COPY . /home/site/wwwroot
 
-EXPOSE 8080
+EXPOSE 80
 
 # Install requirements
 RUN cd /home/site/wwwroot && pip install -r requirements.txt
