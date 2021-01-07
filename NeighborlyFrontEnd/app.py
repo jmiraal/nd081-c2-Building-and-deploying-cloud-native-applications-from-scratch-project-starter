@@ -1,5 +1,6 @@
 import logging.config
 import os
+from datetime import datetime
 from flask import Flask, Blueprint, request, jsonify, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
 import settings
@@ -68,6 +69,15 @@ def home():
 
     ads = response.json()
     posts = response2.json()
+    
+    # code to use LogicApp 'logicapphttptrigger'. Send and email.
+    payload = {
+        "time": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+        "event": "Main Page Request"
+    }
+    #headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    response3 = requests.post(os.environ['LOGIC_APP_URL'], json= payload)
+
     return render_template("index.html", ads=ads, posts=posts)
 
 
