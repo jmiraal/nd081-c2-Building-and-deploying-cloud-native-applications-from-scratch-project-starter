@@ -10,6 +10,7 @@ from feedgen.feed import FeedGenerator
 from flask import make_response
 from urllib.parse import urljoin
 from werkzeug.contrib.atom import AtomFeed
+from azure.eventhub import EventHubProducerClient, EventData
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -75,8 +76,19 @@ def home():
         "time": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
         "event": "Main Page Request"
     }
-    #headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     response3 = requests.post(os.environ['LOGIC_APP_URL'], json= payload)
+    
+    # code to generate an Event and to send it to the Event Hub.
+    producer = EventHubProducerClient.from_connection_string(conn_str="Endpoint=sb://namespaceneighborlyapp.servicebus.windows.net/;SharedAccessKeyName=neighborlyhubsend;SharedAccessKey=RPBuDZ9OUi+xTxdMy1AixwpMfvAt64h1FlkzBJ+rq+Y=;EntityPath=eventhubneighborlyapp", eventhub_name="eventhubneighborlyapp")
+    reading = {'id': 'HOME PAGE', 
+               'topic': 'ACTIVITY', 
+               'subject': 'HOME PAGE ACTIVITY', 
+               'event_type': 'EVENT HUB TRIGGER'}
+    s = json.dumps(reading) # Convert the reading into a JSON string.
+    event_data_batch = producer.create_batch()
+    event_data_batch.add(EventData(s)) # Add event data to the batch.
+    producer.send_batch(event_data_batch) # Send the batch of events to the event hub.
+    producer.close()
 
     return render_template("index.html", ads=ads, posts=posts)
 
