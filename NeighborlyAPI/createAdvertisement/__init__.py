@@ -8,9 +8,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     if request:
         try:
             # TODO: Update with appropriate MongoDB connection information
-            url = "mongodb://neighborlymongodbjmira:RdG7p7bwK0X2nCrPJeIErucJTVgxMWTg5gPxbpbf6oslgMowInzb3qFkn3tUMcyibldZVMsbqW3myYvDuL8HnA==@neighborlymongodbjmira.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"  
+            url = "mongodb://neighborlymongodbjmira:93e6tfk4JvB4yqrb1T509j9W3AOR3HmylzteSqgd2JSAVzdCqRtbHq6uyOSjryvwbZDEQoATJgCttZBFSEznFg==@neighborlymongodbjmira.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"  
             client = pymongo.MongoClient(url)
-            database = client['azure']
+            database = client['neighborlydbjmira']
             collection = database['advertisements']
 
             rec_id1 = collection.insert_one(eval(request))
