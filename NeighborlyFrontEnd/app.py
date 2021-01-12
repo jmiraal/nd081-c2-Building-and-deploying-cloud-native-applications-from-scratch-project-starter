@@ -147,7 +147,7 @@ def update_ad_request(id):
 
 @app.route('/ad/delete/<id>', methods=['POST'])
 def delete_ad_request(id):
-    response = requests.delete(settings.API_URL + '/deleteAdvertisement?id=' + id)
+    response = requests.delete(settings.API_URL + '/deleteAdvertisement?id=' + id + '&code=' + settings.DELETE_CODE)
     if response.status_code == 200:
         return redirect(url_for('home'))
 
