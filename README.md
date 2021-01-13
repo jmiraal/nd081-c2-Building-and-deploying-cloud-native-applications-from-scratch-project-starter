@@ -235,8 +235,15 @@ We need to set up the Azure resource group, region, storage account, and an app 
 
         Save the function app url **https://<APP_NAME>.azurewebsites.net/api/** since you will need to update that in the client-side of the application.
 
-**STUDENT NOTE: These are the results obtained after deploying the function app into Azure:**
+**STUDENT NOTE: These are the functions deployed in azure. We add also printout with the endpoints url:**
 
+
+![](screenshots/functions_screenshot.png)
+
+![](screenshots/functions_url.png)
+
+
+**STUDENT NOTE: These are the results obtained after deploying the function app into Azure:**
 
 **ADVERTISEMENTS:**
 ![](screenshots/api_deployed_adds.png)
@@ -297,6 +304,8 @@ API_URL="https://<APP_NAME>.azurewebsites.net/api"
 
 ![](screenshots/ACR_repositories_cmd.png)
 
+![](screenshots/image_pushed_to_ACR.png)
+
 3. Create a Kubernetes cluster, and verify your connection to it with `kubectl get nodes`.
 
 **STUDENT NOTE: The Kubernetes cluster in the portal:**
@@ -334,6 +343,8 @@ API_URL="https://<APP_NAME>.azurewebsites.net/api"
 **STUDENT NOTE: These are the event hub and the namespace created:**
 
 ![](screenshots/event_hub.png)
+
+![](screenshots/event_hub_namespace.png)
 
 3. Add the connection string of the event hub to the Azure Function.
 
