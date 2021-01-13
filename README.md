@@ -10,6 +10,8 @@ The application makes direct requests to the back-end API endpoints. These are e
 
 You can see an example of the deployed app below.
 
+**STUDENT NOTE: We add comments in bold with explanations of the solutions.**
+
 ![Deployed App](images/final-app.png)
 
 ## Dependencies
@@ -55,10 +57,29 @@ We need to set up the Azure resource group, region, storage account, and an app 
     ```bash
     Your Linux function app 'myneighborlyapiv1', that uses a consumption plan has been successfully created but is not active until content is published using Azure Portal or the Functions Core Tools.
     ```
+**STUDENT_NOTE: We can see in this screenshot the Azure Function and the Sgorage Account created:**
+![](screenshots/resources_1.png)
 
 4. Set up a Cosmos DB Account. You will need to use the same resource group, region and storage account, but can name the Cosmos DB account as you prefer. **Note:** This step may take a little while to complete (15-20 minutes in some cases).
 
+**STUDENT_NOTE: We can see the Cosmos DB account created above.**
+
 5. Create a MongoDB Database in CosmosDB Azure and two collections, one for `advertisements` and one for `posts`.
+
+**STUDENT_NOTE: In this screenshot we show de MongoDB Databese and the two collections.**
+
+
+**DATABASE:**
+![](screenshots/mongoDB_database.png)
+
+
+**ADVERTISEMENTS:**
+![](screenshots/adds_collection.png)
+
+
+**POSTS:**
+![](screenshots/posts_collection.png)
+
 6. Print out your connection string or get it from the Azure Portal. Copy/paste the **primary connection** string.  You will use it later in your application.
 
     Example connection string output:
@@ -103,6 +124,16 @@ We need to set up the Azure resource group, region, storage account, and an app 
         2020-05-18T23:30:40.933-0400  connected to: mongodb://neighborlyapp.mongo.cosmos.azure.com:10255/
         2020-05-18T23:30:42.260-0400  4 document(s) imported successfully. 0 document(s) failed to import.
         ```
+        
+**STUDENT NOTE: These are the data imported in the collections:**
+
+
+**ADVERTISEMENTS:**
+![](screenshots/adds_collection.png)
+
+
+**POSTS:**
+![](screenshots/posts_collection.png)
 
 8. Hook up your connection string into the NeighborlyAPI server folder. You will need to replace the *url* variable with your own connection string you copy-and-pasted in the last step, along with some additional information.
     - Tip: Check out [this post](https://docs.microsoft.com/en-us/azure/cosmos-db/connect-mongodb-account) if you need help with what information is needed.
@@ -130,6 +161,8 @@ We need to set up the Azure resource group, region, storage account, and an app 
     ```
 
     Make sure to do the same step for the other 6 HTTP Trigger functions.
+
+**STUDENT NOTE: This step was done in all de functions.**
 
 9. Deploy your Azure Functions.
 
@@ -160,6 +193,16 @@ We need to set up the Azure resource group, region, storage account, and an app 
         #example endpoint for all posts
         http://localhost:7071/api/getposts
         ```
+        
+**STUDENT NOTE: These are the results obtained after testing the functions getadvertisements and getposts in local:**
+
+
+**ADVERTISEMENTS:**
+![](screenshots/api_local_adds.png)
+
+
+**POSTS:**
+![](screenshots/api_local_posts.png)
 
     2. Now you can deploy functions to Azure by publishing your function app.
 
@@ -195,6 +238,17 @@ We need to set up the Azure resource group, region, storage account, and an app 
 
         Save the function app url **https://<APP_NAME>.azurewebsites.net/api/** since you will need to update that in the client-side of the application.
 
+**STUDENT NOTE: These are the results obtained after deploying the functions to Azure:**
+
+
+**ADVERTISEMENTS:**
+![](screenshots/api_deployed_adds.png)
+
+
+**POSTS:**
+![](screenshots/api_deployed_posts.png)
+
+
 ### II. Deploying the client-side Flask web application
 
 We are going to update the Client-side `settings.py` with published API endpoints. First navigate to the `settings.py` file in the NeighborlyFrontEnd/ directory.
@@ -211,6 +265,11 @@ Use a text editor to update the API_URL to your published url from the last step
 API_URL="https://<APP_NAME>.azurewebsites.net/api"
 ```
 
+**STUDENT NOTE: This is the flask app running in local:**
+
+![](screenshots/client_side_local.png)
+
+
 ### III. CI/CD Deployment
 
 1. Deploy your client app. **Note:** Use a **different** app name here to deploy the front-end, or else you will erase your API. From within the `NeighborlyFrontEnd` directory:
@@ -220,15 +279,104 @@ API_URL="https://<APP_NAME>.azurewebsites.net/api"
 
     Make sure to also provide any necessary information in `settings.py` to move from localhost to your deployment.
 
+**STUDENT NOTE: This is the client-side deployed in the public link: https://neighborlywebappjmira.azurewebsites.net/**
+
+![](screenshots/client_side_deployed.png)
+
 2. Create an Azure Registry and dockerize your Azure Functions. Then, push the container to the Azure Container Registry.
+
+**STUDENT NOTE: These are the docker images created in local:**
+
+![](screenshots/docker_images.png)
+
+
+**STUDENT NOTE: This is the application running in the local Docker image:**
+
+![](screenshots/WebApp_Local_Docker_Image.png)
+
+**STUDENT NOTE: This is the ACR defined in Azure with the Docker images loaded in the repository:**
+
+![](screenshots/ACR_repositories.png)
+
+![](screenshots/ACR_repositories_cmd.png)
+
 3. Create a Kubernetes cluster, and verify your connection to it with `kubectl get nodes`.
+
+**STUDENT NOTE: The Kubernetes cluster in the portal:**
+
+![](screenshots/aks_nodes.png)
+
+**STUDENT NOTE: The Kubernetes nodes and services in the CLI:**
+
+![](screenshots/aks_nodes_services_pods_cmd.png)
+
 4. Deploy app to Kubernetes, and check your deployment with `kubectl config get-contexts`.
+
+**STUDENT NOTE: I forgot to save the screenshot of this command, but this is the web ap running in the Kubernetes:**
+
+![](screenshots/AKS_APP_Front.png)
 
 ### IV. Event Hubs and Logic App
 
 1. Create a Logic App that watches for an HTTP trigger. When the HTTP request is triggered, send yourself an email notification.
+
+**STUDENT NOTE: The logic App defined:**
+
+![](screenshots/Logic_app_design.png)
+
+**STUDENT NOTE: The code in the file app.py to trigger the logic app:**
+
+![](screenshots/code_to_trigger_the_logic_app.png)
+
+**STUDENT NOTE: The mail recived in the inbox:**
+
+![](screenshots/mail_example.png)
+
 2. Create a namespace for event hub in the portal. You should be able to obtain the namespace URL.
+
+**STUDENT NOTE: These are the event hub and the namespace created:**
+
+![](screenshots/event_hub.png)
+
 3. Add the connection string of the event hub to the Azure Function.
+
+**STUDENT NOTE: In the code of the course was provided an EventGridEvent called eventHubTrigger. I didn't see the point of adding an event hub connection to an EventGrid, so what I did was to define an EventHubEvent called EventHubTrigger1.**
+
+**We have defined two SAS directives, one for listenning: conneighborlyhub, and one for sending: neighborlyhubsend:**
+
+![](screenshots/SAS_directives.png)
+
+**We have used the listening directive in the function EventHubTrigger1. This function print a log of the data of the hub event when it occurs.**
+
+![](screenshots/evnt_hub_init.png)
+
+**We have used the other directive to generate a hub event in the app.py file when somebody enters in the web page:**
+
+![](screenshots/send_event_hub_cod.png)
+
+
+**If we make a request of the main page, this is an axample of the log obtained in the application logs. I shows that the Trigger function has received the event sended in the home page:**
+
+![](screenshots/event_hub_log.png)
+
+### V. Additional Funcionalities
+
+1. The posts API currently only has getPost and getPosts endpoints. Students can build upon this collection by creating the other three missing API endpoints under CRUD, the missing HTML templates, and missing routes in the Flask application.
+
+**STUDENT NOTE: We have defined three new functions in the API: createPost, updatePost and deletePost. The front end has been also change to include this funcioanlities in the web. We have replicated the same schema used for advertisementes. This is how the front page looks like:**
+
+![](screenshots/create_update_post.png)
+
+** and this is a new post create by us:**
+
+
+![](screenshots/new_post.png)
+
+
+2. Students can update the deleteAdvertisement to use authLevel as “function” instead of “anonymous”. This requires the student to use the default key in the header for authentication.
+
+**STUDENT NOTE: We have changed the authentication level into the functions deleteAdvertisement and deletePost.**
+
 
 ### V.  Cleaning Up Your Services
 
