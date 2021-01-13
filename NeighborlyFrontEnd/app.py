@@ -1,6 +1,8 @@
 import logging.config
 import os
 from datetime import datetime
+import time
+import dateutil.tz
 from flask import Flask, Blueprint, request, jsonify, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
 import settings
@@ -98,11 +100,22 @@ def add_ad_view():
     return render_template("new_ad.html")
 
 
+@app.route('/post/add', methods=['GET'])
+def post_ad_view():
+    return render_template("new_post.html")
+
+
 @app.route('/ad/edit/<id>', methods=['GET'])
 def edit_ad_view(id):
     response = requests.get(settings.API_URL + '/getAdvertisement?id=' + id)
     ad = response.json()
     return render_template("edit_ad.html", ad=ad)
+
+@app.route('/post/edit/<id>', methods=['GET'])
+def edit_post_view(id):
+    response = requests.get(settings.API_URL + '/getPost?id=' + id)
+    post = response.json()
+    return render_template("edit_post.html", post=post)
 
 
 @app.route('/ad/delete/<id>', methods=['GET'])
@@ -111,11 +124,23 @@ def delete_ad_view(id):
     ad = response.json()
     return render_template("delete_ad.html", ad=ad)
 
+@app.route('/post/delete/<id>', methods=['GET'])
+def delete_post_view(id):
+    response = requests.get(settings.API_URL + '/getPost?id=' + id)
+    post = response.json()
+    return render_template("delete_post.html", post=post)
+
 @app.route('/ad/view/<id>', methods=['GET'])
 def view_ad_view(id):
     response = requests.get(settings.API_URL + '/getAdvertisement?id=' + id)
     ad = response.json()
     return render_template("view_ad.html", ad=ad)
+
+@app.route('/post/view/<id>', methods=['GET'])
+def view_post_view(id):
+    response = requests.get(settings.API_URL + '/getPost?id=' + id)
+    post = response.json()
+    return render_template("view_post.html", post=post)
 
 @app.route('/ad/new', methods=['POST'])
 def add_ad_request():
@@ -131,6 +156,23 @@ def add_ad_request():
     response = requests.post(settings.API_URL + '/createAdvertisement', json=json.dumps(req_data))
     return redirect(url_for('home'))
 
+@app.route('/post/new', methods=['POST'])
+def add_post_request():
+    # Get item from the POST body
+    now = datetime.now(dateutil.tz.tzlocal())
+    est = time.localtime().tm_isdst
+    x = lambda x: 'Eastern Standard Time' if x==0 else 'Eastern Daylight Time'
+    req_data = {
+        'title': request.form['title'],
+        'city': request.form['city'],
+        'description': request.form['description'],
+        'imgUrl': request.form['imgUrl'],
+        "publishedDate" : datetime.strftime(now, '%A %B %d %Y %H:%M:%S  GMT%z ') + x(est)
+    }
+    response = requests.post(settings.API_URL + '/createPost', json=json.dumps(req_data))
+    return redirect(url_for('home'))
+
+
 @app.route('/ad/update/<id>', methods=['POST'])
 def update_ad_request(id):
     # Get item from the POST body
@@ -145,9 +187,31 @@ def update_ad_request(id):
     response = requests.put(settings.API_URL + '/updateAdvertisement?id=' + id, json=json.dumps(req_data))
     return redirect(url_for('home'))
 
+@app.route('/post/update/<id>', methods=['POST'])
+def update_post_request(id):
+    # Get item from the POST body
+    now = datetime.now(dateutil.tz.tzlocal())
+    est = time.localtime().tm_isdst
+    x = lambda x: 'Eastern Standard Time' if x==0 else 'Eastern Daylight Time'
+    req_data = {
+        'title': request.form['title'],
+        'city': request.form['city'],
+        'description': request.form['description'],
+        'imgUrl': request.form['imgUrl'],
+        "publishedDate" : datetime.strftime(now, '%A %B %d %Y %H:%M:%S  GMT%z ') + x(est)
+    }
+    response = requests.put(settings.API_URL + '/updatePost?id=' + id, json=json.dumps(req_data))
+    return redirect(url_for('home'))
+
 @app.route('/ad/delete/<id>', methods=['POST'])
 def delete_ad_request(id):
-    response = requests.delete(settings.API_URL + '/deleteAdvertisement?id=' + id + '&code=' + settings.DELETE_CODE)
+    response = requests.delete(settings.API_URL + '/deleteAdvertisement?id=' + id + '&code=' + settings.DELETE_CODE_ADD)
+    if response.status_code == 200:
+        return redirect(url_for('home'))
+
+@app.route('/post/delete/<id>', methods=['POST'])
+def delete_post_request(id):
+    response = requests.delete(settings.API_URL + '/deletePost?id=' + id + '&code=' + settings.DELETE_CODE_POST)
     if response.status_code == 200:
         return redirect(url_for('home'))
 

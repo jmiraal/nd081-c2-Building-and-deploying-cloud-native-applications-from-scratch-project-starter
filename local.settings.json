@@ -1,9 +1,10 @@
 {
   "IsEncrypted": false,
   "Values": {
-    "FUNCTIONS_WORKER_RUNTIME": "CfDJ8KvJ6DmYyMJCgkPKMHi9yggxobSNL+EiBudqjTbkN08MV8FPGx7WqKyJXi1vK5/3O48YnxQvGjJtBiH2gbzh8qUxrA2On+1JRf1xQeWwdKwATocSwT1CMT9SN2gtzXs0ZQ=="
+    "FUNCTIONS_WORKER_RUNTIME": "CfDJ8KvJ6DmYyMJCgkPKMHi9yggxobSNL+EiBudqjTbkN08MV8FPGx7WqKyJXi1vK5/3O48YnxQvGjJtBiH2gbzh8qUxrA2On+1JRf1xQeWwdKwATocSwT1CMT9SN2gtzXs0ZQ==",
+    "SCM_DO_BUILD_DURING_DEPLOYMENT": "True",
+    "WEBSITE_HTTPLOGGING_RETENTION_DAYS": "3",
+    "LOGIC_APP_URL": "https://prod-28.eastus2.logic.azure.com:443/workflows/4ff2132c18e047c49b963447a26da3b1/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=P6pK0VC7uMtAHxzWpVoeNkJN7I4djWErYZefq-OVF34"
   },
-  "ConnectionStrings": {},
-
-  "AzureWebJobsStorage": ""
+  "ConnectionStrings": {}
 }
