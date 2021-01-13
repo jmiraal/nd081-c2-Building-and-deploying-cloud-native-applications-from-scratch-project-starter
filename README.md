@@ -57,7 +57,7 @@ We need to set up the Azure resource group, region, storage account, and an app 
     ```bash
     Your Linux function app 'myneighborlyapiv1', that uses a consumption plan has been successfully created but is not active until content is published using Azure Portal or the Functions Core Tools.
     ```
-**STUDENT_NOTE: We can see in this screenshot the Azure Function and the Sgorage Account created:**
+**STUDENT_NOTE: We can see in this screenshot the Azure Function App and the Sgorage Account created:**
 ![](screenshots/resources_1.png)
 
 4. Set up a Cosmos DB Account. You will need to use the same resource group, region and storage account, but can name the Cosmos DB account as you prefer. **Note:** This step may take a little while to complete (15-20 minutes in some cases).
@@ -73,12 +73,9 @@ We need to set up the Azure resource group, region, storage account, and an app 
 ![](screenshots/mongoDB_database.png)
 
 
-**ADVERTISEMENTS:**
-![](screenshots/adds_collection.png)
+**COLLECTIONS:**
+![](screenshots/collections.png)
 
-
-**POSTS:**
-![](screenshots/posts_collection.png)
 
 6. Print out your connection string or get it from the Azure Portal. Copy/paste the **primary connection** string.  You will use it later in your application.
 
@@ -238,7 +235,7 @@ We need to set up the Azure resource group, region, storage account, and an app 
 
         Save the function app url **https://<APP_NAME>.azurewebsites.net/api/** since you will need to update that in the client-side of the application.
 
-**STUDENT NOTE: These are the results obtained after deploying the functions to Azure:**
+**STUDENT NOTE: These are the results obtained after deploying the function app into Azure:**
 
 
 **ADVERTISEMENTS:**
@@ -312,7 +309,7 @@ API_URL="https://<APP_NAME>.azurewebsites.net/api"
 
 4. Deploy app to Kubernetes, and check your deployment with `kubectl config get-contexts`.
 
-**STUDENT NOTE: I forgot to save the screenshot of this command, but this is the web ap running in the Kubernetes:**
+**STUDENT NOTE: I forgot to save the screenshot of this command, but this is the web ap running on the Kubernetes:**
 
 ![](screenshots/AKS_APP_Front.png)
 
@@ -355,7 +352,7 @@ API_URL="https://<APP_NAME>.azurewebsites.net/api"
 ![](screenshots/send_event_hub_cod.png)
 
 
-**If we make a request of the main page, this is an axample of the log obtained in the application logs. I shows that the Trigger function has received the event sended in the home page:**
+**If we make a request of the main page, this is an axample of the log obtained in the application logs. It shows that the Trigger function has received the event sended in the home page:**
 
 ![](screenshots/event_hub_log.png)
 
@@ -367,7 +364,7 @@ API_URL="https://<APP_NAME>.azurewebsites.net/api"
 
 ![](screenshots/create_update_post.png)
 
-** and this is a new post create by us:**
+**and this is a new post create by us:**
 
 
 ![](screenshots/new_post.png)
